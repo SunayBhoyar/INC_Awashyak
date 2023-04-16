@@ -1,0 +1,18 @@
+[
+    {
+        "merged": "/Users/sunaykishorbhoyar/StudioProjects/awashyak_v1/build/alan_voice/intermediates/merged_res/release/drawable-anydpi-v24/ic_button_logo_state_01.xml",
+        "source": "/Users/sunaykishorbhoyar/.gradle/caches/transforms-3/7f11d4618b58dcde46c9b29470dfcec6/transformed/jetified-sdk-4.20.8/res/drawable-anydpi-v24/ic_button_logo_state_01.xml"
+    },
+    {
+        "merged": "/Users/sunaykishorbhoyar/StudioProjects/awashyak_v1/build/alan_voice/intermediates/merged_res/release/drawable-anydpi-v24/ic_button_inner_triangle.xml",
+        "source": "/Users/sunaykishorbhoyar/.gradle/caches/transforms-3/7f11d4618b58dcde46c9b29470dfcec6/transformed/jetified-sdk-4.20.8/res/drawable-anydpi-v24/ic_button_inner_triangle.xml"
+    },
+    {
+        "merged": "/Users/sunaykishorbhoyar/StudioProjects/awashyak_v1/build/alan_voice/intermediates/merged_res/release/drawable-anydpi-v24/ic_launcher_foreground.xml",
+        "source": "/Users/sunaykishorbhoyar/.gradle/caches/transforms-3/7f11d4618b58dcde46c9b29470dfcec6/transformed/jetified-sdk-4.20.8/res/drawable-anydpi-v24/ic_launcher_foreground.xml"
+    },
+    {
+        "merged": "/Users/sunaykishorbhoyar/StudioProjects/awashyak_v1/build/alan_voice/intermediates/merged_res/release/drawable-anydpi-v24/ic_button_inner_shape.xml",
+        "source": "/Users/sunaykishorbhoyar/.gradle/caches/transforms-3/7f11d4618b58dcde46c9b29470dfcec6/transformed/jetified-sdk-4.20.8/res/drawable-anydpi-v24/ic_button_inner_shape.xml"
+    }
+]
