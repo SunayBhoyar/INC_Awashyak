@@ -20,11 +20,10 @@ Customer.post("/Register",async(req,res)=>{
     }
     catch(err){
        res.send(err);
-
     }
 })
 
-Customer.post("SignIn",async(req,res)=>{
+Customer.post("/SignIn",async(req,res)=>{
     try{
         const email = req.body.email;
         const password = req.body.password;
