@@ -1,4 +1,5 @@
-import 'package:awashyak_v1/screens/login/signin.dart';
+import '../../screens/login/signin.dart';
+import '../../screens/login/signup.dart';
 
 import '../../constants.dart';
 import '../../integration/user.dart';
@@ -103,6 +104,16 @@ class _StartUpState extends State<StartUp> {
               ),
               Flexible(
                 child: InkWell(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: ((context) {
+                          return  SignUp();
+                        }),
+                      ),
+                    );
+                  },
                   child: Container(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),

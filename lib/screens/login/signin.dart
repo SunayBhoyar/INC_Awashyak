@@ -1,6 +1,5 @@
 import 'package:awashyak_v1/screens/shopkeeper/homepageShop.dart';
 
-import '../../screens/test.dart';
 
 import '../../screens/homepage.dart';
 
@@ -107,18 +106,20 @@ class SignIn extends StatelessWidget {
               ),
               Flexible(
                 child: InkWell(
-                  onTap: () async{
+                  onTap: () async {
                     String token_ = await signInCustomer(
-                      "bhoyar.suncy@gmail.com", "password");
+                        "bhoyar.suncy@gmail.com", "password");
                     // ignore: use_build_context_synchronously
                     Navigator.push(
                       context,
                       MaterialPageRoute(
                         builder: ((context) {
-                          return  HomePageCustomer(token: token_,);
+                          return HomePageCustomer(
+                            token: token_,
+                          );
                         }),
                       ),
-                    );  
+                    );
                   },
                   child: Container(
                     decoration: BoxDecoration(
@@ -144,10 +145,7 @@ class SignIn extends StatelessWidget {
               ),
               InkWell(
                 onTap: () async {
-                  // String res = await signInCustomer(
-                  //     "bhoyar.suncy@gmail.com", "password");
-                  print(emailcontroller.text);
-                  print(passwordcontroller.text);
+                  Navigator.pop(context);
                 },
                 child: const Center(
                   child: Text(
