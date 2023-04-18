@@ -1,28 +1,34 @@
 import '../constants.dart';
 import '../screens/chatGPT.dart';
+import '../screens/individual_medicine_screen.dart';
+import '../screens/medicineNotFound.dart';
+import '../screens/medicine_search_page.dart';
 import '../utilities/datamodel.dart';
 import '../utilities/medicineCall.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 //to remove to main page
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
 
-class TestPage extends StatefulWidget {
-  const TestPage({super.key});
+class HomePageCustomer extends StatefulWidget {
+  final String token;
+  const HomePageCustomer({super.key, required this.token});
 
   @override
-  State<TestPage> createState() => _TestPageState();
+  State<HomePageCustomer> createState() => _HomePageCustomerState();
 }
 
-class _TestPageState extends State<TestPage> {
+class _HomePageCustomerState extends State<HomePageCustomer> {
   Future<Data> fetch(String medicineName) async {
     var result = await MedicineDataFetch.sendMessage(medicineName);
-    if (result == "No drug found under that name.") {
+    if (result == "failed to fetch") {
       return sampleData;
     }
+    print(result);
     return result;
   }
+
+  String searchQuery = "Amoxicillin";
 
   int _Page = 0;
   final iconList = <IconData>[
@@ -95,39 +101,47 @@ class _TestPageState extends State<TestPage> {
             Padding(
               padding: EdgeInsets.fromLTRB(
                   screenHeight * 0.03, 0, screenHeight * 0.03, 0),
-              child: Stack(
-                children: [
-                  SizedBox(
-                    height: 60,
-                    child: TextField(
-                      onChanged: (value) => {},
-                      decoration: const InputDecoration(
-                        filled: true,
-                        fillColor: secondryColor,
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(20)),
-                          borderSide:
-                              BorderSide(color: primaryColor, width: 3.0),
-                        ),
-                        hintText: "           Search for Medicine here",
-                        hintStyle: TextStyle(color: primaryColor),
+              child: SizedBox(
+                height: 60,
+                child: TextField(
+                  onChanged: (value) => {
+                    searchQuery = value,
+                  },
+                  decoration: InputDecoration(
+                    prefixIcon: InkWell(
+                      onTap: () async {
+                        Data res = await fetch(searchQuery);
+                        // ignore: use_build_context_synchronously
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: ((context) {
+                              if (res.brandName == "null") {
+                                return MedicineNotFound();
+                              } else {
+                                return IndividualMedicine(
+                                  givenDataSet: res,
+                                );
+                              }
+                            }),
+                          ),
+                        );
+                      },
+                      child: const Icon(
+                        Icons.search_outlined,
+                        color: primaryColor,
                       ),
                     ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(left: screenHeight * 0.03),
-                    child: const Align(
-                      alignment: Alignment.centerLeft,
-                      child: SizedBox(
-                        height: 60,
-                        child: Icon(
-                          Icons.search_outlined,
-                          color: primaryColor,
-                        ),
-                      ),
+                    filled: true,
+                    fillColor: secondryColor,
+                    enabledBorder: const OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(20)),
+                      borderSide: BorderSide(color: primaryColor, width: 3.0),
                     ),
+                    hintText: "Search for Medicine here",
+                    hintStyle: const TextStyle(color: primaryColor),
                   ),
-                ],
+                ),
               ),
             ),
             Padding(
@@ -153,32 +167,6 @@ class _TestPageState extends State<TestPage> {
                 ],
               ),
             ),
-            // ListView(
-            //   scrollDirection: Axis.horizontal,
-            //   children: data.map(
-            //     (item) {
-            //       return InkWell(
-            //         onTap: () {},
-            //         child: Stack(children: [
-            //           Container(
-            //             margin: const EdgeInsets.symmetric(horizontal: 10),
-            //             height: 200,
-            //             width: screenWidth*0.3,
-            //             child: ClipRRect(
-            //               borderRadius: BorderRadius.circular(20.0),
-            //               child: Image.network(
-            //                 item.urlToImage ??
-            //                     "https://www.google.com/url?sa=i&url=https%3A%2F%2Funsplash.com%2Fs%2Fphotos%2Fwhite&psig=AOvVaw0i4DsAfbXSvJxV2ovFyKRx&ust=1671035012769000&source=images&cd=vfe&ved=0CA8QjRxqFwoTCLChnNSA9_sCFQAAAAAdAAAAABAE",
-            //                 height: 200,
-            //                 fit: BoxFit.fill,
-            //               ),
-            //             ),
-            //           ),
-            //         ]),
-            //       );
-            //     },
-            //   ).toList(),
-            // ),
             SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: Row(
@@ -190,7 +178,7 @@ class _TestPageState extends State<TestPage> {
                       child: Stack(
                         children: [
                           Container(
-                            color: indibg,
+                            color: homeIndiBg,
                             height: screenHeight * 0.2,
                             width: screenWidth * 0.35,
                           ),
@@ -198,36 +186,52 @@ class _TestPageState extends State<TestPage> {
                             future: fetch("Synthroid"),
                             builder: (context, AsyncSnapshot<Data> snapshot) {
                               if (snapshot.hasData) {
-                                return SizedBox(
-                                  height: screenHeight * 0.2,
-                                  width: screenWidth * 0.35,
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      Image(
-                                        image: const AssetImage(
-                                            'lib/assets/med.png'),
-                                        height: screenHeight * 0.13,
-                                      ),
-                                      Text(
-                                        snapshot.data?.genericName ?? "wad",
-                                        textAlign: TextAlign.center,
-                                        style: const TextStyle(
-                                          fontSize: 15,
-                                          color: primaryColor,
-                                          fontWeight: FontWeight.bold,
+                                return InkWell(
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            IndividualMedicine(
+                                          givenDataSet: snapshot.data,
                                         ),
                                       ),
-                                      Text(
-                                        snapshot.data?.strenght ?? "100ml",
-                                        style: const TextStyle(
-                                          fontSize: 15,
-                                          color: primaryColor,
+                                    );
+                                  },
+                                  child: SizedBox(
+                                    height: screenHeight * 0.2,
+                                    width: screenWidth * 0.35,
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        Image(
+                                          image: const AssetImage(
+                                              'lib/assets/med.png'),
+                                          height: screenHeight * 0.13,
                                         ),
-                                      ),
-                                    ],
+                                        Text(
+                                          snapshot.data?.genericName ?? "wad",
+                                          textAlign: TextAlign.center,
+                                          overflow: TextOverflow.fade,
+                                          maxLines: 2,
+                                          style: const TextStyle(
+                                            fontSize: 15,
+                                            color: primaryColor,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                        Text(
+                                          snapshot.data?.strenght ?? "100ml",
+                                          style: const TextStyle(
+                                            fontSize: 15,
+                                            color: primaryColor,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 );
                               }
@@ -245,7 +249,7 @@ class _TestPageState extends State<TestPage> {
                       child: Stack(
                         children: [
                           Container(
-                            color: indibg,
+                            color: homeIndiBg,
                             height: screenHeight * 0.2,
                             width: screenWidth * 0.35,
                           ),
@@ -253,36 +257,52 @@ class _TestPageState extends State<TestPage> {
                             future: fetch("Amoxicillin"),
                             builder: (context, AsyncSnapshot<Data> snapshot) {
                               if (snapshot.hasData) {
-                                return SizedBox(
-                                  height: screenHeight * 0.2,
-                                  width: screenWidth * 0.35,
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      Image(
-                                        image: const AssetImage(
-                                            'lib/assets/med.png'),
-                                        height: screenHeight * 0.13,
-                                      ),
-                                      Text(
-                                        snapshot.data?.genericName ?? "wad",
-                                        textAlign: TextAlign.center,
-                                        style: const TextStyle(
-                                          fontSize: 15,
-                                          color: primaryColor,
-                                          fontWeight: FontWeight.bold,
+                                return InkWell(
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            IndividualMedicine(
+                                          givenDataSet: snapshot.data,
                                         ),
                                       ),
-                                      Text(
-                                        snapshot.data?.strenght ?? "100ml",
-                                        style: const TextStyle(
-                                          fontSize: 15,
-                                          color: primaryColor,
+                                    );
+                                  },
+                                  child: SizedBox(
+                                    height: screenHeight * 0.2,
+                                    width: screenWidth * 0.35,
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        Image(
+                                          image: const AssetImage(
+                                              'lib/assets/med.png'),
+                                          height: screenHeight * 0.13,
                                         ),
-                                      ),
-                                    ],
+                                        Text(
+                                          snapshot.data?.genericName ?? "wad",
+                                          textAlign: TextAlign.center,
+                                          overflow: TextOverflow.fade,
+                                          maxLines: 2,
+                                          style: const TextStyle(
+                                            fontSize: 15,
+                                            color: primaryColor,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                        Text(
+                                          snapshot.data?.strenght ?? "100ml",
+                                          style: const TextStyle(
+                                            fontSize: 15,
+                                            color: primaryColor,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 );
                               }
@@ -300,7 +320,7 @@ class _TestPageState extends State<TestPage> {
                       child: Stack(
                         children: [
                           Container(
-                            color: indibg,
+                            color: homeIndiBg,
                             height: screenHeight * 0.2,
                             width: screenWidth * 0.35,
                           ),
@@ -308,36 +328,52 @@ class _TestPageState extends State<TestPage> {
                             future: fetch("Norvasc"),
                             builder: (context, AsyncSnapshot<Data> snapshot) {
                               if (snapshot.hasData) {
-                                return SizedBox(
-                                  height: screenHeight * 0.2,
-                                  width: screenWidth * 0.35,
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      Image(
-                                        image: const AssetImage(
-                                            'lib/assets/med.png'),
-                                        height: screenHeight * 0.13,
-                                      ),
-                                      Text(
-                                        snapshot.data?.genericName ?? "wad",
-                                        textAlign: TextAlign.center,
-                                        style: const TextStyle(
-                                          fontSize: 15,
-                                          color: primaryColor,
-                                          fontWeight: FontWeight.bold,
+                                return InkWell(
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            IndividualMedicine(
+                                          givenDataSet: snapshot.data,
                                         ),
                                       ),
-                                      Text(
-                                        snapshot.data?.strenght ?? "100ml",
-                                        style: const TextStyle(
-                                          fontSize: 15,
-                                          color: primaryColor,
+                                    );
+                                  },
+                                  child: SizedBox(
+                                    height: screenHeight * 0.2,
+                                    width: screenWidth * 0.35,
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        Image(
+                                          image: const AssetImage(
+                                              'lib/assets/med.png'),
+                                          height: screenHeight * 0.13,
                                         ),
-                                      ),
-                                    ],
+                                        Text(
+                                          snapshot.data?.genericName ?? "wad",
+                                          textAlign: TextAlign.center,
+                                          overflow: TextOverflow.fade,
+                                          maxLines: 2,
+                                          style: const TextStyle(
+                                            fontSize: 15,
+                                            color: primaryColor,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                        Text(
+                                          snapshot.data?.strenght ?? "100ml",
+                                          style: const TextStyle(
+                                            fontSize: 15,
+                                            color: primaryColor,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 );
                               }
@@ -378,7 +414,7 @@ class _TestPageState extends State<TestPage> {
                     child: Stack(
                       children: [
                         Container(
-                          color: indibg,
+                          color: homeIndiBg,
                           height: screenHeight * 0.2,
                           width: screenWidth * 0.35,
                         ),
@@ -430,7 +466,7 @@ class _TestPageState extends State<TestPage> {
                     child: Stack(
                       children: [
                         Container(
-                          color: indibg,
+                          color: homeIndiBg,
                           height: screenHeight * 0.2,
                           width: screenWidth * 0.35,
                         ),
@@ -481,14 +517,18 @@ class _TestPageState extends State<TestPage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        shape: const BeveledRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(10))),
-        backgroundColor: primaryColor,
+        backgroundColor: lightColor,
         onPressed: () {
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => const ChatGPT()));
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const ChatGPT(),
+            ),
+          );
         },
-        child: SizedBox(child: const Icon(Icons.search_outlined)),
+        child: const SizedBox(
+          child: Image(image: AssetImage('lib/assets/AppLogo.png')),
+        ),
       ),
       bottomNavigationBar: AnimatedBottomNavigationBar(
         icons: iconList,

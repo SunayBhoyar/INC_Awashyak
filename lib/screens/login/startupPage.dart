@@ -1,15 +1,17 @@
+import 'package:awashyak_v1/screens/login/signin.dart';
+
 import '../../constants.dart';
 import '../../integration/user.dart';
 import 'package:flutter/material.dart';
 
-class loginPage extends StatefulWidget {
-  const loginPage({Key? key}) : super(key: key);
+class StartUp extends StatefulWidget {
+  const StartUp({Key? key}) : super(key: key);
 
   @override
-  State<loginPage> createState() => _loginPageState();
+  State<StartUp> createState() => _StartUpState();
 }
 
-class _loginPageState extends State<loginPage> {
+class _StartUpState extends State<StartUp> {
   @override
   Widget build(BuildContext context) {
     Size size;
@@ -63,16 +65,26 @@ class _loginPageState extends State<loginPage> {
                 ),
               ),
               SizedBox(
-                height: height * 0.1,
+                height: height * 0.08,
               ),
               Flexible(
                 child: InkWell(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: ((context) {
+                          return  SignIn();
+                        }),
+                      ),
+                    );
+                  },
                   child: Container(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
                       color: Colors.black26,
                     ),
-                    height: height * 0.06,
+                    height: height * 0.05,
                     width: width * 0.5,
                     //color: Colors.black26,
                     child: const Center(
@@ -86,14 +98,39 @@ class _loginPageState extends State<loginPage> {
                   ),
                 ),
               ),
+              SizedBox(
+                height: height * 0.01,
+              ),
+              Flexible(
+                child: InkWell(
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: Colors.black26,
+                    ),
+                    height: height * 0.05,
+                    width: width * 0.5,
+                    //color: Colors.black26,
+                    child: const Center(
+                        child: Text(
+                      "Register",
+                      style: TextStyle(
+                          color: Color.fromARGB(255, 255, 255, 255),
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold),
+                    )),
+                  ),
+                ),
+              ),
               Flexible(
                 child: SizedBox(
-                  height: height * 0.07,
+                  height: height * 0.03,
                 ),
               ),
               InkWell(
                 onTap: () async {
-                  String res = await signInCustomer("bhoyar.suncy@gmail.com","password");
+                  String res = await signInCustomer(
+                      "bhoyar.suncy@gmail.com", "password");
                   print(res);
                 },
                 child: const Center(

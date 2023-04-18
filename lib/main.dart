@@ -1,6 +1,6 @@
 import '../screens/chatGPT.dart';
 import '../screens/individual_medicine_screen.dart';
-import '../screens/login.dart/login.dart';
+import 'screens/login/startupPage.dart';
 import '../screens/medicine_search_page.dart';
 import '../screens/shopkeeper/homepageShop.dart';
 import '../screens/test.dart';
@@ -23,7 +23,8 @@ class MyApp extends StatelessWidget {
       ),
       // home: TestPage() ,
       // home: HomePageShop(),
-      home: loginPage(),
+      home: StartUp(),
+
     ); 
   }
 }
