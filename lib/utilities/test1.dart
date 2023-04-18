@@ -1,7 +1,7 @@
 import 'dart:developer';
 
-import 'package:awashyak_v1/utilities/datamodel.dart';
-import 'package:awashyak_v1/utilities/medicineCall.dart';
+import '../utilities/datamodel.dart';
+import '../utilities/medicineCall.dart';
 import 'package:flutter/material.dart';
 
 class test1 extends StatefulWidget {

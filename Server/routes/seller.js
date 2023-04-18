@@ -9,18 +9,23 @@ const medicine = require("../models/medicine");
 Shop.post("/Signup",async(req,res)=>{
     try{
         const NewSeller = new seller({
-            name:"Pranav",
-            shopName:"MCSunay",
-            address:"PICT", 
-            mobile:9979731378,
-            email:"j7a@gmail.com",
-            licence:"N5IL",
-            password:"Pranav",
-            cpassword:"Pranav"
+            name:req.body.name,
+            shopName:req.body.shopName,
+            address:req.body.address, 
+            mobile:req.body.mobile,
+            email:req.body.email,
+            licence:req.body.licence,
+            password:req.body.password,
+            cpassword:req.body.cpassword,
+            location:{
+                type:"Point",
+                coordinates: [parseFloat(req.body.lat),parseFloat(req.body.long)],
+            },
+            placeId:req.body.placeId
         })
         
         const SellerCreated = await NewSeller.save();
-        console.log(SellerCreated);
+        res.send(SellerCreated);
         const token =  await SellerCreated.generateAuthToken();
         console.log(token);
         //res.cookie("jwt",token,{expires:new Date(date.now() + 80000),httpOnly:true});
@@ -41,7 +46,7 @@ Shop.post("/login",async(req,res)=>{
             const token = await Userfound.generateAuthToken();
             console.log(token);
             //res.cookie("jwt",token,{expires:new Date(date.now() + 80000),httpOnly:true});
-            
+            res.send(Userfound)
             
         }
         else{
@@ -62,6 +67,7 @@ Shop.post("/AddMed",AuthSeller,async(req,res)=>{
         name:req.body.name,
         expiry:req.body.expiry,
         Quantity:req.body.Quantity,
+        Cost:req.body.Cost,
         Shopid: SellerFound._id
     })
     const Addmedicine = await NewMedicine.save();
@@ -83,6 +89,19 @@ Shop.get("/getMed/:id",AuthSeller,async(req,res)=>{
         console.log(err);
     }
 })
+
+//For seller to search paritcular med
+Shop.get("/searchMyMed/:id/:name",async(req,res)=>{
+    try{
+        const id = req.params.id;
+        const name = req.params.name;
+        const getMedicine = await medicine.findOne({name,Shopid:id});
+        res.send(getMedicine);
+    }catch(err){
+        res.status(500).send(err);
+    }
+})
+
 
 //For Seller to Update his medicine
 Shop.patch("/UpdateMed/:id",AuthSeller,async(req,res)=>{

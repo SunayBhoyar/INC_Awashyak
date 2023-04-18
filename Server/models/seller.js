@@ -37,6 +37,21 @@ const SellerSchema = new mongoose.Schema({
         required:true,
         unique:[true,"User with Same Licence exist"]
     },
+    location:{
+        type: {
+            type: String,
+            enum: ['Point'],
+            required: true
+          },
+          coordinates: {
+            type: [Number],
+            required: true
+          }
+    },
+    placeId:{
+        type:String,
+        unique:[true,"Shop with Same placeId exists"]
+    },
     password:{
         type:String,
         required:true
@@ -52,10 +67,11 @@ const SellerSchema = new mongoose.Schema({
    
 
 })
+SellerSchema.index({location:"2dsphere"});
 SellerSchema.methods.generateAuthToken = async function(){
     try{
         // console.log(this.id);
-        const token = jwt.sign({_id:this._id},"DevelopersAreSunayTarunDarshanPranav");
+        const token = jwt.sign({_id:this._id},process.env.SECRET_KEY);
         this.tokens = this.tokens.concat({token:token});
         await this.save();
         return token;

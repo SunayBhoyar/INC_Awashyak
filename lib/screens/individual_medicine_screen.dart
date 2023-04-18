@@ -1,6 +1,6 @@
-import 'package:awashyak_v1/constants.dart';
-import 'package:awashyak_v1/screens/medical_stores_card.dart';
-import 'package:awashyak_v1/utilities/datamodel.dart';
+import '../constants.dart';
+import '../screens/medical_stores_card.dart';
+import '../utilities/datamodel.dart';
 import 'package:flutter/material.dart';
 
 class IndividualMedicine extends StatelessWidget {

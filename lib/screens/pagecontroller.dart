@@ -1,4 +1,4 @@
-import 'package:awashyak_v1/screens/homePage.dart';
+import '../screens/homePage.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 

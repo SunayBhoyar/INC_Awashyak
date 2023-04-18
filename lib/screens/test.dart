@@ -1,9 +1,10 @@
-import 'package:awashyak_v1/constants.dart';
-import 'package:awashyak_v1/screens/chatGPT.dart';
-import 'package:awashyak_v1/screens/individual_medicine_screen.dart';
-import 'package:awashyak_v1/screens/medicine_search_page.dart';
-import 'package:awashyak_v1/utilities/datamodel.dart';
-import 'package:awashyak_v1/utilities/medicineCall.dart';
+import '../constants.dart';
+import '../screens/chatGPT.dart';
+import '../screens/individual_medicine_screen.dart';
+import '../screens/medicineNotFound.dart';
+import '../screens/medicine_search_page.dart';
+import '../utilities/datamodel.dart';
+import '../utilities/medicineCall.dart';
 import 'package:flutter/material.dart';
 
 //to remove to main page
@@ -109,12 +110,19 @@ class _TestPageState extends State<TestPage> {
                     prefixIcon: InkWell(
                       onTap: () async {
                         Data res = await fetch(searchQuery);
+                        // ignore: use_build_context_synchronously
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => MedicineSearchPage(
-                              searchQuery: searchQuery,
-                            ),
+                            builder: ((context) {
+                              if (res.brandName == "null") {
+                                return MedicineNotFound();
+                              } else {
+                                return IndividualMedicine(
+                                  givenDataSet: res,
+                                );
+                              }
+                            }),
                           ),
                         );
                       },
@@ -508,12 +516,8 @@ class _TestPageState extends State<TestPage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        shape: const BeveledRectangleBorder(
-          borderRadius: BorderRadius.all(
-            Radius.circular(10),
-          ),
-        ),
-        backgroundColor: primaryColor,
+        
+        backgroundColor: lightColor,
         onPressed: () {
           Navigator.push(
             context,
@@ -523,7 +527,7 @@ class _TestPageState extends State<TestPage> {
           );
         },
         child: const SizedBox(
-          child: Icon(Icons.search_outlined),
+          child:Image(image: AssetImage('lib/assets/AppLogo.png')),
         ),
       ),
       bottomNavigationBar: AnimatedBottomNavigationBar(

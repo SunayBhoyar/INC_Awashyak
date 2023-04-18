@@ -1,10 +1,10 @@
 import 'dart:ui';
 
-import 'package:awashyak_v1/constants.dart';
-import 'package:awashyak_v1/screens/individual_medicine_screen.dart';
-import 'package:awashyak_v1/screens/searchMedicineCard.dart';
-import 'package:awashyak_v1/utilities/datamodel.dart';
-import 'package:awashyak_v1/utilities/medicineCall.dart';
+import '../constants.dart';
+import '../screens/individual_medicine_screen.dart';
+import '../screens/searchMedicineCard.dart';
+import '../utilities/datamodel.dart';
+import '../utilities/medicineCall.dart';
 import 'package:flutter/material.dart';
 
 class MedicineSearchPage extends StatelessWidget {

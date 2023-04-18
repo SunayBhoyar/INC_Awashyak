@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:awashyak_v1/utilities/datamodel.dart';
+import '../utilities/datamodel.dart';
 
 const primaryColor = Color.fromARGB(255, 63, 133, 164);
 const lightColor = Color.fromARGB(255, 246, 244, 245);

@@ -1,4 +1,4 @@
-import 'package:awashyak_v1/constants.dart';
+import '../constants.dart';
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable

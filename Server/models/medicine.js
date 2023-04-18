@@ -11,6 +11,11 @@ const medSchema = new mongoose.Schema({
     },
     Quantity:{
         type:Number,
+        required:true
+    },
+    Cost:{
+        type:Number,
+        required:true
     },
     Shopid:{
         type:mongoose.Types.ObjectId,

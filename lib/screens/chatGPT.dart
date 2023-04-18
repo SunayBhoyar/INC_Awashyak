@@ -1,6 +1,6 @@
-import 'package:awashyak_v1/chatbot/apiServices.dart';
-import 'package:awashyak_v1/chatbot/chatMessege.dart';
-import 'package:awashyak_v1/constants.dart';
+import '../chatbot/apiServices.dart';
+import '../chatbot/chatMessege.dart';
+import '../constants.dart';
 import 'package:flutter/material.dart';
 import 'package:text_to_speech/text_to_speech.dart';
 import 'package:speech_to_text/speech_to_text.dart' as stt;

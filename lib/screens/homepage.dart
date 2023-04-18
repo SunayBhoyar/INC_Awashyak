@@ -1,7 +1,7 @@
-import 'package:awashyak_v1/constants.dart';
-import 'package:awashyak_v1/screens/chatGPT.dart';
-import 'package:awashyak_v1/utilities/datamodel.dart';
-import 'package:awashyak_v1/utilities/medicineCall.dart';
+import '../constants.dart';
+import '../screens/chatGPT.dart';
+import '../utilities/datamodel.dart';
+import '../utilities/medicineCall.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
