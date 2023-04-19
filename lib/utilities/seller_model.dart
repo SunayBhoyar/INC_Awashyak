@@ -45,17 +45,17 @@ class SellerModel {
 
   factory SellerModel.fromMap(Map<String, dynamic> map) {
     return SellerModel(
-      name_: map['name_'] ?? '',
-      shopName_: map['shopName_'] ?? '',
-      address_: map['address_'] ?? '',
-      mobile_: map['mobile_'] ?? 1234567890,
-      licence_: map['licence_'] ?? '',
-      email_: map['email_'] ?? '',
-      password_: map['password_'] ?? '',
-      cPassword_: map['cPassword_'] ?? '',
-      latitude_: map['latitude_'] ?? '',
-      longitude_: map['longitude_'] ?? '',
-      placeId_: map['placeId_'] ?? '',
+      name_: map['name'] ?? '',
+      shopName_: map['shopName'] ?? '',
+      address_: map['address'] ?? '',
+      mobile_: map['mobile'] ?? 1234567890,
+      licence_: map['licence'] ?? '',
+      email_: map['email'] ?? '',
+      password_: map['password'] ?? '',
+      cPassword_: map['cPassword'] ?? '',
+      latitude_:(map['location']["coordinates"][0]).toString(),
+      longitude_: (map['location']["coordinates"][1]).toString(),
+      placeId_: map['_id'] ?? '',
     );
   }
 

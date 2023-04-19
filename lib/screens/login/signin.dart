@@ -108,7 +108,7 @@ class SignIn extends StatelessWidget {
                 child: InkWell(
                   onTap: () async {
                     String token_ = await signInCustomer(
-                        "bhoyar.suncy@gmail.com", "password");
+                        emailcontroller.text, passwordcontroller.text);
                     // ignore: use_build_context_synchronously
                     Navigator.push(
                       context,

@@ -4,13 +4,13 @@ import 'dart:ffi';
 import "package:http/http.dart" as http;
 
 // enter the url here
-String host = "";
+String host = "http://localhost:2700";
 
 Future<String> signUpShopkeeper(
     String name_,
     String shopName_,
     String address_,
-    Long mobile_,
+    int mobile_,
     String licence_,
     String email_,
     String password_,
@@ -32,57 +32,63 @@ Future<String> signUpShopkeeper(
       "long": longitude_,
       "placeId": placeId_
     };
+    Map<String, String> header = {'Content-Type': "application/json"};
 
-    var res =
-        await http.post(Uri.parse("$host/Signup"), body: jsonEncode(body));
+    var res = await http.post(Uri.parse("$host/Signup"),
+        headers: header, body: jsonEncode(body));
 
     switch (res.statusCode) {
       case 200:
         return jsonDecode(res.body)["tokens"][0]["token"];
     }
+    return res.statusCode.toString();
   } catch (e) {
-    return "Error";
+    return e.toString();
   }
-  return "Error";
 }
 
-Future<String> signInShopkeeper(String email_, String password_, _) async {
+Future<String> signInShopkeeper(String email_, String password_) async {
   try {
     final body = {
       "email": email_,
       "password": password_,
     };
+    Map<String, String> header = {'Content-Type': "application/json"};
 
-    var res = await http.post(Uri.parse("$host/login"), body: jsonEncode(body));
+    var res = await http.post(Uri.parse("$host/login"),
+        headers: header, body: jsonEncode(body));
 
     switch (res.statusCode) {
       case 200:
         return jsonDecode(res.body)["tokens"][0]["token"];
     }
+    return res.statusCode.toString();
   } catch (e) {
-    return "Error";
+    print(e.toString());
+    return e.toString();
   }
-  return "Error";
 }
 
-Future<String> addMedicine(String token_,String name_ , String expiry_ , int quantity_ , int cost_  ) async {
+Future<String> addMedicine(String token_, String name_, String expiry_,
+    int quantity_, int cost_) async {
   try {
     final header = {"Authorization": token_};
     final body = {
       "name": name_,
       "expiry": expiry_,
-      "Quantity":quantity_,
-      "Cost":cost_
+      "Quantity": quantity_,
+      "Cost": cost_
     };
 
-    var res = await http.post(Uri.parse("$host/AddMed"), headers: header,body: jsonEncode(body));
+    var res = await http.post(Uri.parse("$host/AddMed"),
+        headers: header, body: jsonEncode(body));
 
     switch (res.statusCode) {
       case 200:
         return "sucess";
     }
+    return res.statusCode.toString();
   } catch (e) {
-    return "Error";
+    return e.toString();
   }
-  return "Error";
 }

@@ -12,7 +12,8 @@ import 'package:flutter/material.dart';
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
 
 class HomePageShop extends StatefulWidget {
-  const HomePageShop({super.key});
+  String token;
+  HomePageShop({super.key,required this.token});
 
   @override
   State<HomePageShop> createState() => _HomePageShopState();
@@ -28,7 +29,6 @@ class _HomePageShopState extends State<HomePageShop> {
     return result;
   }
 
-  
   int _Page = 0;
   final iconList = <IconData>[
     Icons.home,
@@ -47,8 +47,8 @@ class _HomePageShopState extends State<HomePageShop> {
       backgroundColor: secondryColor,
       appBar: AppBar(
         centerTitle: true,
-        title: const Text(
-          "AWASHYAK",
+        title:  Text(
+          widget.token,
           style: TextStyle(
             color: lightColor,
             fontSize: 24,
@@ -130,24 +130,45 @@ class _HomePageShopState extends State<HomePageShop> {
               ),
             ),
             Padding(
-              padding: EdgeInsets.only(left: screenHeight * 0.03,right: screenHeight * 0.03,bottom:screenHeight * 0.03 ),
+              padding: EdgeInsets.only(
+                  left: screenHeight * 0.03,
+                  right: screenHeight * 0.03,
+                  bottom: screenHeight * 0.03),
               child: Container(
-                decoration: const BoxDecoration(color: homeIndiBg,
-                borderRadius: BorderRadius.all(Radius.circular(30),),),
-                height: screenHeight*0.2,
+                decoration: const BoxDecoration(
+                  color: homeIndiBg,
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(30),
+                  ),
+                ),
+                height: screenHeight * 0.2,
                 width: screenWidth,
                 child: Padding(
                   padding: EdgeInsets.all(screenHeight * 0.02),
-                  child: Text("Medical Analatics -",style: TextStyle(color: buttonColor,fontSize: screenHeight*0.02,fontWeight: FontWeight.bold,),),
+                  child: Text(
+                    "Medical Analatics -",
+                    style: TextStyle(
+                      color: buttonColor,
+                      fontSize: screenHeight * 0.02,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                 ),
               ),
             ),
             Padding(
-              padding: EdgeInsets.only(left: screenHeight * 0.03,right: screenHeight * 0.03,bottom:screenHeight * 0.03 ),
+              padding: EdgeInsets.only(
+                  left: screenHeight * 0.03,
+                  right: screenHeight * 0.03,
+                  bottom: screenHeight * 0.03),
               child: Container(
-                decoration: const BoxDecoration(color: homeIndiBg,
-                borderRadius: BorderRadius.all(Radius.circular(30),),),
-                height: screenHeight*0.1,
+                decoration: const BoxDecoration(
+                  color: homeIndiBg,
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(30),
+                  ),
+                ),
+                height: screenHeight * 0.1,
                 width: screenWidth,
                 child: Padding(
                   padding: EdgeInsets.all(screenHeight * 0.02),
@@ -157,16 +178,47 @@ class _HomePageShopState extends State<HomePageShop> {
                       Column(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          Text("Total Availabe stock",style: TextStyle(color: buttonColor,fontSize: screenHeight*0.017,fontWeight: FontWeight.bold,),),
-                          Text("543 Medcines",style: TextStyle(color: buttonColor,fontSize: screenHeight*0.015,fontWeight: FontWeight.bold,),),
+                          Text(
+                            "Total Availabe stock",
+                            style: TextStyle(
+                              color: buttonColor,
+                              fontSize: screenHeight * 0.017,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          Text(
+                            "543 Medcines",
+                            style: TextStyle(
+                              color: buttonColor,
+                              fontSize: screenHeight * 0.015,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
                         ],
                       ),
-                      Container(width: screenWidth*0.005,color: primaryColor,),
+                      Container(
+                        width: screenWidth * 0.005,
+                        color: primaryColor,
+                      ),
                       Column(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          Text("Total Cost of Stock",style: TextStyle(color: buttonColor,fontSize: screenHeight*0.017,fontWeight: FontWeight.bold,),),
-                          Text("₹ 63,444",style: TextStyle(color: buttonColor,fontSize: screenHeight*0.015,fontWeight: FontWeight.bold,),),
+                          Text(
+                            "Total Cost of Stock",
+                            style: TextStyle(
+                              color: buttonColor,
+                              fontSize: screenHeight * 0.017,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          Text(
+                            "₹ 63,444",
+                            style: TextStyle(
+                              color: buttonColor,
+                              fontSize: screenHeight * 0.015,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
                         ],
                       ),
                     ],

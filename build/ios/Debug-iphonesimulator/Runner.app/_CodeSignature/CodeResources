@@ -86,7 +86,7 @@
 		</data>
 		<key>Frameworks/App.framework/App</key>
 		<data>
-		oKiGqVM64yaj9ck6x5j9ZxJ/Mw0=
+		h8eK4r/Iknoz/O3VBI64AE3wKBc=
 		</data>
 		<key>Frameworks/App.framework/Info.plist</key>
 		<data>
@@ -94,7 +94,7 @@
 		</data>
 		<key>Frameworks/App.framework/_CodeSignature/CodeResources</key>
 		<data>
-		rOImCJezpOHdlFQkdFmZ7evcZbk=
+		7chEyUx2qPxaXH9qiFfOh5yGodA=
 		</data>
 		<key>Frameworks/App.framework/flutter_assets/AssetManifest.json</key>
 		<data>
@@ -118,7 +118,7 @@
 		</data>
 		<key>Frameworks/App.framework/flutter_assets/kernel_blob.bin</key>
 		<data>
-		k+H18SojNLeZBk5pTgAYvQi94Us=
+		odBNkXdU8Gpzdn/tYfEKTtUfHIo=
 		</data>
 		<key>Frameworks/App.framework/flutter_assets/lib/assets/AppLogo.png</key>
 		<data>
@@ -262,7 +262,7 @@
 		</data>
 		<key>Frameworks/Try.framework/Try</key>
 		<data>
-		AF3wqNsBbpKqclxlBPwd50ToAzs=
+		Tomz1ta68x2kHwYdWgPyQgn/+aM=
 		</data>
 		<key>Frameworks/Try.framework/_CodeSignature/CodeResources</key>
 		<data>
@@ -278,7 +278,7 @@
 		</data>
 		<key>Frameworks/alan_voice.framework/alan_voice</key>
 		<data>
-		71s++cHViYsyNc11xofPgdioa90=
+		Y6VkEfBsMMDdcEiWGX5mtDbFQ28=
 		</data>
 		<key>Frameworks/package_info.framework/Info.plist</key>
 		<data>
@@ -290,7 +290,7 @@
 		</data>
 		<key>Frameworks/package_info.framework/package_info</key>
 		<data>
-		JTCEU+xgUt4d5UN4LZR3QuBo+ac=
+		mN561QwfxwcvV+7qe+Hhi9VbVqw=
 		</data>
 		<key>Frameworks/speech_to_text.framework/Info.plist</key>
 		<data>
@@ -302,7 +302,7 @@
 		</data>
 		<key>Frameworks/speech_to_text.framework/speech_to_text</key>
 		<data>
-		rlrE5FllD6EUGVQc08+SqKGXbxQ=
+		rETjkeIMby3wrmjvjXamnpyGAaE=
 		</data>
 		<key>Frameworks/text_to_speech.framework/Info.plist</key>
 		<data>
@@ -314,7 +314,7 @@
 		</data>
 		<key>Frameworks/text_to_speech.framework/text_to_speech</key>
 		<data>
-		S8KTebdCZPDshcB760X2fLh0AtM=
+		E8vRg3wZ4aFSy7LWCW1UmPRw5Zc=
 		</data>
 		<key>Frameworks/url_launcher_ios.framework/Info.plist</key>
 		<data>
@@ -326,7 +326,7 @@
 		</data>
 		<key>Frameworks/url_launcher_ios.framework/url_launcher_ios</key>
 		<data>
-		AYZiCCtHjckwCyxGqLPNUZHCVSM=
+		8owHyYgoZ2M7Cq61kK7lMmqOjrQ=
 		</data>
 		<key>Info.plist</key>
 		<data>
@@ -483,7 +483,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			NCH0OtSmX/vsy07NDErALMq8EbVeaMjCBItBsY/SG/c=
+			jkXDPpR05aVqe0sStpAmLOPThXUqanR78EF7++vaOd8=
 			</data>
 		</dict>
 		<key>Frameworks/App.framework/Info.plist</key>
@@ -497,7 +497,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			4SE4orDXpy8xcPNh665DAK+5Et3zfUe77VHpnR3eMgg=
+			SC07EkNkZZOda6nEFoLsFCouULE9hjxV2oYgyIJPLYw=
 			</data>
 		</dict>
 		<key>Frameworks/App.framework/flutter_assets/AssetManifest.json</key>
@@ -539,7 +539,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			4jNElNaY5OpysrOdaT6nTo6PS9EbQCBK6AeSjGcxFOs=
+			HDKM91Rv2ASLnUqwnilOQVdUnHOE39TuMTQ4lYfGDgQ=
 			</data>
 		</dict>
 		<key>Frameworks/App.framework/flutter_assets/lib/assets/AppLogo.png</key>
@@ -791,7 +791,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			YDv1wFFfjwjFdPtwpf/Vd+XfqOjb01s1uVUaKmNpTX4=
+			TwOE4dkwjpoTHjZ2Kzh6Ga0NMHbVN4jJROR5E6Xk3J0=
 			</data>
 		</dict>
 		<key>Frameworks/Try.framework/_CodeSignature/CodeResources</key>
@@ -819,7 +819,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			r92uFOiAkry1iln5yQyKErb3twsfnEPjo8lTEM47Lts=
+			12AxcmRHq3VWEhU4Rqd/gJr+FGfipLRfnA+RqLhVuIM=
 			</data>
 		</dict>
 		<key>Frameworks/package_info.framework/Info.plist</key>
@@ -840,7 +840,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			+ERKc/D2ckPB93RWsk/uE7UNND/BZfuYQYfsAVKuoag=
+			RlRhujm98hTkFJkeNrIg1IDgZMT1wQzZVOct5drSwpY=
 			</data>
 		</dict>
 		<key>Frameworks/speech_to_text.framework/Info.plist</key>
@@ -861,7 +861,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			Ja97V4cBwcOzT7TrnNVdWkb4VB2biy2g7LBoJOt3NEk=
+			jZroG1zrFWuu5B3ouL3TXp9qtznoHNE8XUCZQRqAJKU=
 			</data>
 		</dict>
 		<key>Frameworks/text_to_speech.framework/Info.plist</key>
@@ -882,7 +882,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			IbtmUpU+VICb6oRbD1pMla/4PMU2/Zx7H3Ix7y4NZBc=
+			rnQEGeXSgU7vX+tx45M6+Jhhoz/OnvJc9xVnD6bw1rg=
 			</data>
 		</dict>
 		<key>Frameworks/url_launcher_ios.framework/Info.plist</key>
@@ -903,7 +903,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			7JWjBQfhgcf7eExmhjC4ovLysK1kas/8Fxy9vOH5Its=
+			qqyjvsW+BtDRQzrr3fJhdviBZCTajh7xmYCSd3Qo7AQ=
 			</data>
 		</dict>
 	</dict>

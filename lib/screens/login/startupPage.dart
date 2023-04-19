@@ -1,3 +1,5 @@
+import 'package:awashyak_v1/screens/shopkeeperLogin/startupPageS.dart';
+
 import '../../screens/login/signin.dart';
 import '../../screens/login/signup.dart';
 
@@ -140,13 +142,18 @@ class _StartUpState extends State<StartUp> {
               ),
               InkWell(
                 onTap: () async {
-                  String res = await signInCustomer(
-                      "bhoyar.suncy@gmail.com", "password");
-                  print(res);
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: ((context) {
+                          return  const StartUpShopkeeper();
+                        }),
+                      ),
+                    );
                 },
                 child: const Center(
                   child: Text(
-                    "Login as Customer",
+                    "Login as Shopkeeper",
                     style: TextStyle(
                       decoration: TextDecoration.underline,
                       color: Color.fromARGB(255, 255, 255, 255),

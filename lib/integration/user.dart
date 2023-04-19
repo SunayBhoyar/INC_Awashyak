@@ -1,10 +1,11 @@
 import 'dart:convert';
 import 'dart:ffi';
 
+import 'package:awashyak_v1/utilities/seller_model.dart';
 import "package:http/http.dart" as http;
 
 // enter the url here
-String host = "http://localhost:2600";
+String host = "http://localhost:2700";
 
 Future<String> signUpCustomer(String name_, int mobile_, String email_,
     String password_, String cPassword_) async {
@@ -41,8 +42,8 @@ Future<String> signInCustomer(
       "email": email_,
       "password": password_,
     };
-    var res =
-        await http.post(Uri.parse("$host/SignIn"),headers: header, body: jsonEncode(body));
+    var res = await http.post(Uri.parse("$host/SignIn"),
+        headers: header, body: jsonEncode(body));
 
     switch (res.statusCode) {
       case 200:
@@ -54,6 +55,26 @@ Future<String> signInCustomer(
   }
 }
 
-// Future<Void> getMedicines(String token_ , String medicineName)async{
+Future<String> getMedicines(String token_, String medicineName_,
+    String latitide_, String longitude_) async {
+  try {
+    Map<String, String> header = {
+      'Content-Type': "application/json",
+      "Authorization": token_
+    };
+    final body = {
+      "latitude": latitide_,
+       "longitude": longitude_
+    };
+    var res = await http.post(Uri.parse("$host/search/$medicineName_"),
+        headers: header, body: jsonEncode(body));
 
-// }
+    switch (res.statusCode) {
+      case 200:
+        return jsonDecode(res.body)["tokens"][0]["token"];
+    }
+    return res.statusCode.toString();
+  } catch (e) {
+    return "Error";
+  }
+}
