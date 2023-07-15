@@ -7,19 +7,29 @@ import '../../screens/shopkeeper/shopManager.dart';
 import '../../utilities/datamodel.dart';
 import '../../utilities/medicineCall.dart';
 import 'package:flutter/material.dart';
+import 'package:syncfusion_flutter_charts/charts.dart';
 
 //to remove to main page
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
 
 class HomePageShop extends StatefulWidget {
   String token;
-  HomePageShop({super.key,required this.token});
+  String shopid;
+  String shopName;
+  HomePageShop({super.key, required this.token, required this.shopid,required this.shopName});
 
   @override
   State<HomePageShop> createState() => _HomePageShopState();
 }
 
 class _HomePageShopState extends State<HomePageShop> {
+  List<_SalesData> chartData = [
+    _SalesData('Jan', 35),
+    _SalesData('Feb', 28),
+    _SalesData('Mar', 34),
+    _SalesData('Apr', 32),
+    _SalesData('May', 40)
+  ];
   Future<Data> fetch(String medicineName) async {
     var result = await MedicineDataFetch.sendMessage(medicineName);
     if (result == "failed to fetch") {
@@ -47,13 +57,19 @@ class _HomePageShopState extends State<HomePageShop> {
       backgroundColor: secondryColor,
       appBar: AppBar(
         centerTitle: true,
-        title:  Text(
-          widget.token,
+        title: const Text(
+          "AWASHYAK",
           style: TextStyle(
             color: lightColor,
             fontSize: 24,
           ),
         ),
+        actions: <Widget>[
+          IconButton(
+            onPressed: (() => Navigator.pop(context)),
+            icon: const Icon(Icons.exit_to_app),
+          )
+        ],
         backgroundColor: primaryColor,
       ),
       drawer: const Drawer(backgroundColor: Colors.white),
@@ -82,11 +98,12 @@ class _HomePageShopState extends State<HomePageShop> {
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
-                                const Text(
-                                  "Shop Name here",
-                                  style: TextStyle(
+                                 Text(
+                                  widget.shopName,
+                                  style: const TextStyle(
                                     color: lightColor,
                                     fontSize: 30,
+                                    
                                   ),
                                 ),
                                 ElevatedButton(
@@ -94,7 +111,10 @@ class _HomePageShopState extends State<HomePageShop> {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (context) => ShopManager(),
+                                        builder: (context) => ShopManager(
+                                          shopid: widget.shopid,
+                                          token: widget.token,
+                                        ),
                                       ),
                                     );
                                   },
@@ -145,13 +165,42 @@ class _HomePageShopState extends State<HomePageShop> {
                 width: screenWidth,
                 child: Padding(
                   padding: EdgeInsets.all(screenHeight * 0.02),
-                  child: Text(
-                    "Medical Analatics -",
-                    style: TextStyle(
-                      color: buttonColor,
-                      fontSize: screenHeight * 0.02,
-                      fontWeight: FontWeight.bold,
-                    ),
+                  child: Column(
+                    children: [
+                      Text(
+                        "Medical Analatics -",
+                        style: TextStyle(
+                          color: buttonColor,
+                          fontSize: screenHeight * 0.02,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 120,
+                        child: SfCircularChart(
+                          backgroundColor: homeIndiBg,
+                          onDataLabelRender: (DataLabelRenderArgs args) {
+                            double value = double.parse(args.text);
+                            args.text = value.toStringAsFixed(0);
+                          },
+                          series: <CircularSeries<_SalesData, String>>[
+                            PieSeries<_SalesData, String>(
+                                selectionBehavior:
+                                    SelectionBehavior(enable: true),
+                                explode: true,
+                                dataSource: chartData,
+                                xValueMapper: (_SalesData sales, _) =>
+                                    sales.year,
+                                yValueMapper: (_SalesData sales, _) =>
+                                    sales.sales,
+                                name: 'Sales',
+                                dataLabelSettings: DataLabelSettings(
+                                  isVisible: true,
+                                ))
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),
@@ -275,7 +324,12 @@ class _HomePageShopState extends State<HomePageShop> {
                                       MaterialPageRoute(
                                         builder: (context) =>
                                             IndividualMedicineShop(
-                                          givenDataSet: snapshot.data,
+                                              name: snapshot.data?.brandName??"",
+                                              quantity: 0,
+                                              time: "",
+                                              inStock: false,
+                                              token: widget.token,
+                                          
                                         ),
                                       ),
                                     );
@@ -295,7 +349,7 @@ class _HomePageShopState extends State<HomePageShop> {
                                           height: screenHeight * 0.13,
                                         ),
                                         Text(
-                                          snapshot.data?.genericName ?? "wad",
+                                          snapshot.data?.brandName ?? "wad",
                                           textAlign: TextAlign.center,
                                           overflow: TextOverflow.fade,
                                           maxLines: 2,
@@ -346,7 +400,12 @@ class _HomePageShopState extends State<HomePageShop> {
                                       MaterialPageRoute(
                                         builder: (context) =>
                                             IndividualMedicineShop(
-                                          givenDataSet: snapshot.data,
+                                              name: snapshot.data?.brandName??"",
+                                              quantity: 0,
+                                              time: "",
+                                              inStock: false,
+                                              token: widget.token,
+                                          
                                         ),
                                       ),
                                     );
@@ -366,7 +425,7 @@ class _HomePageShopState extends State<HomePageShop> {
                                           height: screenHeight * 0.13,
                                         ),
                                         Text(
-                                          snapshot.data?.genericName ?? "wad",
+                                          snapshot.data?.brandName ?? "wad",
                                           textAlign: TextAlign.center,
                                           overflow: TextOverflow.fade,
                                           maxLines: 2,
@@ -417,7 +476,12 @@ class _HomePageShopState extends State<HomePageShop> {
                                       MaterialPageRoute(
                                         builder: (context) =>
                                             IndividualMedicineShop(
-                                          givenDataSet: snapshot.data,
+                                              name: snapshot.data?.brandName??"",
+                                              quantity: 0,
+                                              time: "",
+                                              inStock: false,
+                                              token: widget.token,
+                                          
                                         ),
                                       ),
                                     );
@@ -437,7 +501,7 @@ class _HomePageShopState extends State<HomePageShop> {
                                           height: screenHeight * 0.13,
                                         ),
                                         Text(
-                                          snapshot.data?.genericName ?? "wad",
+                                          snapshot.data?.brandName ?? "wad",
                                           textAlign: TextAlign.center,
                                           overflow: TextOverflow.fade,
                                           maxLines: 2,
@@ -506,4 +570,11 @@ class _HomePageShopState extends State<HomePageShop> {
       ),
     );
   }
+}
+
+class _SalesData {
+  _SalesData(this.year, this.sales);
+
+  final String year;
+  final double sales;
 }

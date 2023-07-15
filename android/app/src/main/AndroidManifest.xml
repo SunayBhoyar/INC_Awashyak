@@ -1,5 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.awashyak_v1">
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <queries>  
     <intent>  
         <action android:name="android.intent.action.TTS_SERVICE" />  
@@ -9,6 +10,9 @@
         android:label="awashyak_v1"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
+        <meta-data
+        android:name="com.google.android.geo.API_KEY"
+        android:value="AIzaSyDDOzjTjf01A0aBmDmnqyNKxGDASg2x7bE"/>
         <activity
             android:name=".MainActivity"
             android:exported="true"

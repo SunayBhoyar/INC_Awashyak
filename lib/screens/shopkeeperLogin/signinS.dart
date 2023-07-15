@@ -108,7 +108,7 @@ class SignInShopkeeper extends StatelessWidget {
               Flexible(
                 child: InkWell(
                   onTap: () async {
-                    String token_ = await signInShopkeeper(
+                    List ret = await signInShopkeeper(
                         emailcontroller.text, passwordcontroller.text);
                     // ignore: use_build_context_synchronously
                     Navigator.push(
@@ -116,7 +116,9 @@ class SignInShopkeeper extends StatelessWidget {
                       MaterialPageRoute(
                         builder: ((context) {
                           return HomePageShop(
-                            token: token_,
+                            shopName: ret[2],
+                            shopid: ret[1],
+                            token: ret[0],
                           );
                         }),
                       ),

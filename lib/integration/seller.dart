@@ -1,12 +1,15 @@
 import 'dart:convert';
 import 'dart:ffi';
+// import 'dart:html';
 
+import 'package:awashyak_v1/screens/searchMedicineCard.dart';
 import "package:http/http.dart" as http;
 
 // enter the url here
-String host = "http://localhost:2700";
+// String host = "http://localhost:2700";
+String host = "https://inc-backend-awashyak.onrender.com";
 
-Future<String> signUpShopkeeper(
+Future<dynamic> signUpShopkeeper(
     String name_,
     String shopName_,
     String address_,
@@ -36,18 +39,25 @@ Future<String> signUpShopkeeper(
 
     var res = await http.post(Uri.parse("$host/Signup"),
         headers: header, body: jsonEncode(body));
+    res = await http.post(Uri.parse("$host/login"),
+        headers: header,
+        body: jsonEncode({"email": email_, "password": password_}));
 
+    // print(res.statusCode);
     switch (res.statusCode) {
       case 200:
-        return jsonDecode(res.body)["tokens"][0]["token"];
+        return [
+          jsonDecode(res.body)["tokens"][0]["token"],
+          jsonDecode(res.body)["_id"],
+          jsonDecode(res.body)["shopName"]
+        ];
     }
-    return res.statusCode.toString();
   } catch (e) {
     return e.toString();
   }
 }
 
-Future<String> signInShopkeeper(String email_, String password_) async {
+Future<dynamic> signInShopkeeper(String email_, String password_) async {
   try {
     final body = {
       "email": email_,
@@ -60,11 +70,14 @@ Future<String> signInShopkeeper(String email_, String password_) async {
 
     switch (res.statusCode) {
       case 200:
-        return jsonDecode(res.body)["tokens"][0]["token"];
+        return [
+          jsonDecode(res.body)["tokens"][0]["token"],
+          jsonDecode(res.body)["_id"],
+          jsonDecode(res.body)["shopName"]
+        ];
     }
     return res.statusCode.toString();
   } catch (e) {
-    print(e.toString());
     return e.toString();
   }
 }
@@ -72,17 +85,20 @@ Future<String> signInShopkeeper(String email_, String password_) async {
 Future<String> addMedicine(String token_, String name_, String expiry_,
     int quantity_, int cost_) async {
   try {
-    final header = {"Authorization": token_};
+    final header = {
+      'Content-Type': "application/json",
+      "Authorization": token_
+    };
     final body = {
       "name": name_,
-      "expiry": expiry_,
+      "expiry": "12",
       "Quantity": quantity_,
       "Cost": cost_
     };
 
     var res = await http.post(Uri.parse("$host/AddMed"),
         headers: header, body: jsonEncode(body));
-
+    // print("a");
     switch (res.statusCode) {
       case 200:
         return "sucess";
@@ -90,5 +106,45 @@ Future<String> addMedicine(String token_, String name_, String expiry_,
     return res.statusCode.toString();
   } catch (e) {
     return e.toString();
+  }
+}
+
+Future<dynamic> getMed(String id_, String token_) async {
+  try {
+    final header = {
+      'Content-Type': "application/json",
+      "Authorization": token_
+    };
+
+    var res = await http.get(Uri.parse("$host/getMed/$id_"), headers: header);
+    switch (res.statusCode) {
+      case 200:
+        List<dynamic> ret = jsonDecode(res.body);
+        List<MedicineCard> medicines =
+            ret.map((dynamic item) => MedicineCard.fromJson(item)).toList();
+
+        return medicines;
+    }
+  } catch (e) {
+    throw "Error";
+  }
+}
+
+Future<dynamic> getIndiMed(String id_, String name_) async {
+  try {
+    final header = {
+      'Content-Type': "application/json",
+    };
+    var res = await http.get(Uri.parse("$host/searchMyMed/$id_/$name_"),
+        headers: header);
+    switch (res.statusCode) {
+      case 200:
+        if (res.body == "") {
+          return {"name": "null"};
+        }
+        return jsonDecode(res.body);
+    }
+  } catch (e) {
+    throw "error";
   }
 }

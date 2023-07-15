@@ -3,10 +3,23 @@ import '../utilities/datamodel.dart';
 import 'package:flutter/material.dart';
 
 class MedicineCard extends StatelessWidget {
-  const MedicineCard({Key? key, required this.givenDataSet}) : super(key: key);
-  
+  const MedicineCard({
+    required this.expiery,
+    required this.name,
+    required this.quantity,
+    Key? key,
+  }) : super(key: key);
+  final String name;
+  final String expiery;
+  final int quantity;
+  factory MedicineCard.fromJson(Map<String, dynamic> json) {
+    return MedicineCard(
+      name: json['name'],
+      expiery: json['expiry'],
+      quantity: json['Quantity'],
+    );
+  }
 
-  final Data givenDataSet;
   @override
   Widget build(BuildContext context) {
     double relative = MediaQuery.of(context).size.height;
@@ -30,18 +43,27 @@ class MedicineCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      givenDataSet.brandName??"Name not fetched",
+                      name,
+                      maxLines: 2,
+                      overflow: TextOverflow.fade,
                       style: TextStyle(
                         color: secondryColor,
-                        fontSize: relative / 50,
+                        fontSize: relative / 40,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                     SizedBox(height: relative / 100),
                     Text(
-                      givenDataSet.description??"No details available",
+                      "Expery detail - $expiery",
                       style: TextStyle(
-                        fontSize: relative / 60,
+                        fontSize: relative /52,
+                        color: secondryColor,
+                      ),
+                    ),
+                    Text(
+                      "Quantity - ${quantity.toString()}",
+                      style: TextStyle(
+                        fontSize: relative / 50,
                         color: secondryColor,
                       ),
                     ),

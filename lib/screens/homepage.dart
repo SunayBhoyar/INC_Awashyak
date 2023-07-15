@@ -6,6 +6,7 @@ import '../screens/medicine_search_page.dart';
 import '../utilities/datamodel.dart';
 import '../utilities/medicineCall.dart';
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 
 //to remove to main page
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
@@ -48,16 +49,17 @@ class _HomePageCustomerState extends State<HomePageCustomer> {
       backgroundColor: secondryColor,
       appBar: AppBar(
         centerTitle: true,
-        title: const Text(
+        title:  const Text(
           "AWASHYAK",
           style: TextStyle(
             color: lightColor,
             fontSize: 24,
           ),
         ),
+        actions: <Widget>[IconButton(onPressed: (() => Navigator.pop(context)), icon: const Icon(Icons.exit_to_app),)],
         backgroundColor: primaryColor,
       ),
-      drawer: const Drawer(backgroundColor: Colors.white),
+      drawer:  const Drawer(backgroundColor: Colors.white,),
       body: SingleChildScrollView(
         child: Column(
           verticalDirection: VerticalDirection.down,
@@ -76,22 +78,24 @@ class _HomePageCustomerState extends State<HomePageCustomer> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        SizedBox(
-                          width: screenWidth * 0.3,
-                          child: const Text(
-                            "Some random shit here",
-                            style: TextStyle(
-                              color: lightColor,
-                              fontSize: 30,
-                            ),
+                        // SizedBox(
+                        //   width: screenWidth * 0.3,
+                        //   child: const Text(
+                        //     "Some random shit here",
+                        //     style: TextStyle(
+                        //       color: lightColor,
+                        //       fontSize: 30,
+                        //     ),
+                        //   ),
+                        // ),
+                        Container(
+                          height: screenHeight * 0.25,
+             
+                          child: Center(
+                              child: Lottie.asset("lib/assets/homepageAni.json"),
                           ),
                         ),
-                        Image(
-                          image:
-                              const AssetImage('lib/assets/homePageVector.png'),
-                          height: screenHeight * 0.25,
-                          width: screenWidth * 0.5,
-                        ),
+                        
                       ],
                     ),
                   ],
@@ -120,6 +124,9 @@ class _HomePageCustomerState extends State<HomePageCustomer> {
                                 return MedicineNotFound();
                               } else {
                                 return IndividualMedicine(
+                                  searchmed: searchQuery,
+                                  token_: widget.token,
+
                                   givenDataSet: res,
                                 );
                               }
@@ -193,6 +200,8 @@ class _HomePageCustomerState extends State<HomePageCustomer> {
                                       MaterialPageRoute(
                                         builder: (context) =>
                                             IndividualMedicine(
+                                              searchmed: "Synthroid",
+                                              token_: widget.token,
                                           givenDataSet: snapshot.data,
                                         ),
                                       ),
@@ -213,7 +222,7 @@ class _HomePageCustomerState extends State<HomePageCustomer> {
                                           height: screenHeight * 0.13,
                                         ),
                                         Text(
-                                          snapshot.data?.genericName ?? "wad",
+                                          snapshot.data?.brandName ?? "wad",
                                           textAlign: TextAlign.center,
                                           overflow: TextOverflow.fade,
                                           maxLines: 2,
@@ -264,6 +273,8 @@ class _HomePageCustomerState extends State<HomePageCustomer> {
                                       MaterialPageRoute(
                                         builder: (context) =>
                                             IndividualMedicine(
+                                              searchmed: "Amoxicillin",
+                                              token_: widget.token,
                                           givenDataSet: snapshot.data,
                                         ),
                                       ),
@@ -284,7 +295,7 @@ class _HomePageCustomerState extends State<HomePageCustomer> {
                                           height: screenHeight * 0.13,
                                         ),
                                         Text(
-                                          snapshot.data?.genericName ?? "wad",
+                                          snapshot.data?.brandName ?? "wad",
                                           textAlign: TextAlign.center,
                                           overflow: TextOverflow.fade,
                                           maxLines: 2,
@@ -335,6 +346,8 @@ class _HomePageCustomerState extends State<HomePageCustomer> {
                                       MaterialPageRoute(
                                         builder: (context) =>
                                             IndividualMedicine(
+                                              searchmed: "Norvasc",
+                                              token_: widget.token,
                                           givenDataSet: snapshot.data,
                                         ),
                                       ),
@@ -355,7 +368,7 @@ class _HomePageCustomerState extends State<HomePageCustomer> {
                                           height: screenHeight * 0.13,
                                         ),
                                         Text(
-                                          snapshot.data?.genericName ?? "wad",
+                                          snapshot.data?.brandName ?? "wad",
                                           textAlign: TextAlign.center,
                                           overflow: TextOverflow.fade,
                                           maxLines: 2,
@@ -405,113 +418,168 @@ class _HomePageCustomerState extends State<HomePageCustomer> {
                 ),
               ),
             ),
-            Row(
-              children: [
-                Padding(
-                  padding: EdgeInsets.only(left: screenHeight * 0.03),
-                  child: ClipRRect(
-                    borderRadius: const BorderRadius.all(Radius.circular(15)),
-                    child: Stack(
-                      children: [
-                        Container(
-                          color: homeIndiBg,
-                          height: screenHeight * 0.2,
-                          width: screenWidth * 0.35,
-                        ),
-                        SizedBox(
-                          height: screenHeight * 0.2,
-                          width: screenWidth * 0.35,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.only(bottom: 8.0),
-                                child: ClipRRect(
-                                  borderRadius: const BorderRadius.all(
-                                      Radius.circular(80)),
-                                  child: Image(
-                                    image:
-                                        const AssetImage('lib/assets/doc.png'),
-                                    height: screenHeight * 0.1,
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(left: screenHeight * 0.03),
+                    child: ClipRRect(
+                      borderRadius: const BorderRadius.all(Radius.circular(15)),
+                      child: Stack(
+                        children: [
+                          Container(
+                            color: homeIndiBg,
+                            height: screenHeight * 0.2,
+                            width: screenWidth * 0.35,
+                          ),
+                          SizedBox(
+                            height: screenHeight * 0.2,
+                            width: screenWidth * 0.35,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(bottom: 8.0),
+                                  child: ClipRRect(
+                                    borderRadius: const BorderRadius.all(
+                                        Radius.circular(80)),
+                                    child: Image(
+                                      image:
+                                          const AssetImage('lib/assets/doc.png'),
+                                      height: screenHeight * 0.1,
+                                    ),
                                   ),
                                 ),
-                              ),
-                              const Text(
-                                "Dr.Sunay",
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  color: primaryColor,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              const Text(
-                                "MBBS",
-                                style: TextStyle(
-                                  fontSize: 15,
-                                  color: primaryColor,
-                                ),
-                              ),
-                            ],
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(left: screenHeight * 0.03),
-                  child: ClipRRect(
-                    borderRadius: const BorderRadius.all(Radius.circular(15)),
-                    child: Stack(
-                      children: [
-                        Container(
-                          color: homeIndiBg,
-                          height: screenHeight * 0.2,
-                          width: screenWidth * 0.35,
-                        ),
-                        SizedBox(
-                          height: screenHeight * 0.2,
-                          width: screenWidth * 0.35,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.only(bottom: 8.0),
-                                child: ClipRRect(
-                                  borderRadius: const BorderRadius.all(
-                                      Radius.circular(80)),
-                                  child: Image(
-                                    image:
-                                        const AssetImage('lib/assets/doc.png'),
-                                    height: screenHeight * 0.1,
+                                const Text(
+                                  "Dr.Sunay",
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                    color: primaryColor,
+                                    fontWeight: FontWeight.bold,
                                   ),
                                 ),
-                              ),
-                              const Text(
-                                "Dr.Pranav",
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  color: primaryColor,
-                                  fontWeight: FontWeight.bold,
+                                const Text(
+                                  "MBBS",
+                                  style: TextStyle(
+                                    fontSize: 15,
+                                    color: primaryColor,
+                                  ),
                                 ),
-                              ),
-                              const Text(
-                                "MBBS",
-                                style: TextStyle(
-                                  fontSize: 15,
-                                  color: primaryColor,
-                                ),
-                              ),
-                            ],
-                          ),
-                        )
-                      ],
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
                     ),
                   ),
-                ),
-              ],
+                  Padding(
+                    padding: EdgeInsets.only(left: screenHeight * 0.03),
+                    child: ClipRRect(
+                      borderRadius: const BorderRadius.all(Radius.circular(15)),
+                      child: Stack(
+                        children: [
+                          Container(
+                            color: homeIndiBg,
+                            height: screenHeight * 0.2,
+                            width: screenWidth * 0.35,
+                          ),
+                          SizedBox(
+                            height: screenHeight * 0.2,
+                            width: screenWidth * 0.35,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(bottom: 8.0),
+                                  child: ClipRRect(
+                                    borderRadius: const BorderRadius.all(
+                                        Radius.circular(80)),
+                                    child: Image(
+                                      image:
+                                          const AssetImage('lib/assets/doc.png'),
+                                      height: screenHeight * 0.1,
+                                    ),
+                                  ),
+                                ),
+                                const Text(
+                                  "Dr.Tarun",
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                    color: primaryColor,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                const Text(
+                                  "MBBS",
+                                  style: TextStyle(
+                                    fontSize: 15,
+                                    color: primaryColor,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(left: screenHeight * 0.03),
+                    child: ClipRRect(
+                      borderRadius: const BorderRadius.all(Radius.circular(15)),
+                      child: Stack(
+                        children: [
+                          Container(
+                            color: homeIndiBg,
+                            height: screenHeight * 0.2,
+                            width: screenWidth * 0.35,
+                          ),
+                          SizedBox(
+                            height: screenHeight * 0.2,
+                            width: screenWidth * 0.35,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(bottom: 8.0),
+                                  child: ClipRRect(
+                                    borderRadius: const BorderRadius.all(
+                                        Radius.circular(80)),
+                                    child: Image(
+                                      image:
+                                          const AssetImage('lib/assets/doc.png'),
+                                      height: screenHeight * 0.1,
+                                    ),
+                                  ),
+                                ),
+                                const Text(
+                                  "Dr.Pranav",
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                    color: primaryColor,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                const Text(
+                                  "MBBS",
+                                  style: TextStyle(
+                                    fontSize: 15,
+                                    color: primaryColor,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             )
           ],
         ),

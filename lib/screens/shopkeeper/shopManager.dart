@@ -1,4 +1,8 @@
+import 'dart:convert';
 import 'dart:ui';
+
+import 'package:awashyak_v1/LoadingPages/IndiShop.dart';
+import 'package:awashyak_v1/integration/seller.dart';
 
 import '../../constants.dart';
 import '../../screens/individual_medicine_screen.dart';
@@ -9,7 +13,18 @@ import '../../utilities/datamodel.dart';
 import '../../utilities/medicineCall.dart';
 import 'package:flutter/material.dart';
 
-class ShopManager extends StatelessWidget {
+class ShopManager extends StatefulWidget {
+  String token;
+  String shopid;
+
+  ShopManager({Key? key, required this.token, required this.shopid})
+      : super(key: key);
+
+  @override
+  State<ShopManager> createState() => _ShopManagerState();
+}
+
+class _ShopManagerState extends State<ShopManager> {
   Future<Data> fetch(String medicineName) async {
     var result = await MedicineDataFetch.sendMessage(medicineName);
     if (result == "failed to fetch") {
@@ -19,7 +34,6 @@ class ShopManager extends StatelessWidget {
   }
 
   String searchQuery = "Amoxicillin";
-  ShopManager({Key? key}) : super(key: key);
 
   @override
   final List<MedicineCard> card = [];
@@ -52,68 +66,122 @@ class ShopManager extends StatelessWidget {
             ),
           ),
           Padding(
-              padding:const  EdgeInsets.symmetric(horizontal:  20),
-              child: SizedBox(
-                height: 60,
-                child: TextField(
-                  onChanged: (value) => {
-                    searchQuery = value,
-                  },
-                  decoration: InputDecoration(
-                    prefixIcon: InkWell(
-                      onTap: () async {
-                        Data res = await fetch(searchQuery);
-                        // ignore: use_build_context_synchronously
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: ((context) {
-                              if (res.brandName == "null") {
-                                return MedicineNotFound();
-                              } else {
-                                return IndividualMedicineShop(
-                                  givenDataSet: res,
-                                );
-                              }
-                            }),
-                          ),
-                        );
-                      },
-                      child: const Icon(
-                        Icons.search_outlined,
-                        color: primaryColor,
-                      ),
-                    ),
-                    filled: true,
-                    fillColor: secondryColor,
-                    enabledBorder: const OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(20)),
-                      borderSide: BorderSide(color: primaryColor, width: 3.0),
-                    ),
-                    hintText: "Search for Medicine here",
-                    hintStyle: const TextStyle(color: primaryColor),
-                  ),
-                ),
-              ),
-            ),
-          Flexible(
-            child: FutureBuilder(
-              future: fetch(
-                  " "), // here  we need to add the function which return the all the inventry of the medicines
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  return InkWell(
-                    onTap: () {
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: SizedBox(
+              height: 60,
+              child: TextField(
+                onChanged: (value) => {
+                  searchQuery = value,
+                },
+                decoration: InputDecoration(
+                  prefixIcon: InkWell(
+                    onTap: () async {
+                      Data res = await fetch(searchQuery);
+                      // ignore: use_build_context_synchronously
+                      // Navigator.push(
+                      //   context,
+                      //   MaterialPageRoute(
+                      //     builder: ((context) {
+                      //       if (res.brandName == "null") {
+                      //         return MedicineNotFound();
+                      //       } else {
+                      //         return IndividualMedicineShop(
+                      //           name: res.brandName ?? "NULL",
+                      //           quantity: 0,
+                      //           time: "",
+                      //           inStock: false,
+                      //           token: widget.token,
+                      //         );
+                      //       }
+                      //     }),
+                      //   ),
+                      // );
+                      // ignore: use_build_context_synchronously
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => IndividualMedicineShop(
-                            givenDataSet: snapshot.data,
-                          ),
+                          builder: (context) {
+                            return FutureBuilder(
+                              future: getIndiMed(
+                                  widget.shopid, res.brandName ?? "NULL"),
+                              builder: (context, snapshot1) {
+                                if (snapshot1.hasData) {
+                                  if (snapshot1.data["name"] == "null") {
+                                    return IndividualMedicineShop(
+                                      name: res.brandName ?? "NULL",
+                                      quantity: 0,
+                                      time: "null",
+                                      inStock: false,
+                                      token: widget.token,
+                                    );
+                                  }else{return IndividualMedicineShop(
+                                    name: snapshot1.data["name"],
+                                    quantity: snapshot1.data["Quantity"],
+                                    time: snapshot1.data["expiry"],
+                                    inStock: true,
+                                    token: widget.token,
+                                  );}
+                                }
+                                return const IndiLoading();
+                              },
+                            );
+                          },
                         ),
                       );
                     },
-                    child: MedicineCard(givenDataSet: snapshot.data!),
+                    child: const Icon(
+                      Icons.search_outlined,
+                      color: primaryColor,
+                    ),
+                  ),
+                  filled: true,
+                  fillColor: secondryColor,
+                  enabledBorder: const OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(20)),
+                    borderSide: BorderSide(color: primaryColor, width: 3.0),
+                  ),
+                  hintText: "Search for Medicine here",
+                  hintStyle: const TextStyle(color: primaryColor),
+                ),
+              ),
+            ),
+          ),
+          Flexible(
+            child: FutureBuilder(
+              future: getMed(widget.shopid, widget.token),
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  return ListView.builder(
+                    itemCount: snapshot.data.length,
+                    itemBuilder: (context, index) {
+                      return InkWell(
+                          onTap: () async {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) {
+                                  return FutureBuilder(
+                                    future: getIndiMed(widget.shopid,
+                                        snapshot.data[index].name),
+                                    builder: (context, snapshot1) {
+                                      if (snapshot1.hasData) {
+                                        return IndividualMedicineShop(
+                                          name: snapshot1.data["name"],
+                                          quantity: snapshot1.data["Quantity"],
+                                          time: snapshot1.data["expiry"],
+                                          inStock: true,
+                                          token: widget.token,
+                                        );
+                                      }
+                                      return const IndiLoading();
+                                    },
+                                  );
+                                },
+                              ),
+                            );
+                          },
+                          child: snapshot.data[index]);
+                    },
                   );
                 }
                 return const CircularProgressIndicator();

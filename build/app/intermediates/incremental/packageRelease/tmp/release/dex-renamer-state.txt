@@ -1,4 +1,0 @@
-#Wed Apr 05 18:51:11 IST 2023
-base.0=/Users/sunaykishorbhoyar/StudioProjects/awashyak_v1/build/app/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-renamed.0=classes.dex
-path.0=classes.dex

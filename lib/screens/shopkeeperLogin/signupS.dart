@@ -1,4 +1,5 @@
 import 'package:awashyak_v1/integration/seller.dart';
+import 'package:awashyak_v1/screens/shopkeeperLogin/map.dart';
 
 import '../../screens/shopkeeper/homepageShop.dart';
 
@@ -9,6 +10,7 @@ import '../../integration/user.dart';
 import 'package:flutter/material.dart';
 
 class SignUpShopkeeper extends StatelessWidget {
+  late String placeID;
   SignUpShopkeeper({Key? key}) : super(key: key);
 
   TextEditingController namecontroller = TextEditingController();
@@ -249,11 +251,29 @@ class SignUpShopkeeper extends StatelessWidget {
                   ),
                 ),
                 SizedBox(
+                  height: height * 0.03,
+                ),
+                ElevatedButton(
+                    style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all(indibg)),
+                    onPressed: (() async {
+                      final placeId = await Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: ((context) {
+                            return MapScreen();
+                          }),
+                        ),
+                      );
+                      placeID = placeId;
+                    }),
+                    child: const Text("Select the loaction on the map")),
+                SizedBox(
                   height: height * 0.1,
                 ),
                 InkWell(
                   onTap: () async {
-                    String token_ = await signUpShopkeeper(
+                    List ret = await signUpShopkeeper(
                         namecontroller.text,
                         shopnamecontroller.text,
                         addresscontroller.text,
@@ -264,15 +284,17 @@ class SignUpShopkeeper extends StatelessWidget {
                         cpasswordcontroller.text,
                         "17.54151",
                         "73.4353",
-                        "placeID");
-                    print(token_);
+                        placeID);
+                    // print(ret);
                     // ignore: use_build_context_synchronously
                     Navigator.push(
                       context,
                       MaterialPageRoute(
                         builder: ((context) {
                           return HomePageShop(
-                            token: token_,
+                            shopName: ret[2],
+                            shopid: ret[1],
+                            token: ret[0],
                           );
                         }),
                       ),

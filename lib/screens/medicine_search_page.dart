@@ -83,12 +83,15 @@ class MedicineSearchPage extends StatelessWidget {
                         MaterialPageRoute(
                           builder: (context) =>
                               IndividualMedicine(
+                                searchmed: "Synthroid",
+                            
+                                token_: "awdwad",
                             givenDataSet: snapshot.data,
                           ),
                         ),
                       );
                     },
-                    child: MedicineCard(givenDataSet: snapshot.data!),
+                    // child: MedicineCard(givenDataSet: snapshot.data!),
                   );
                 }
                 return const CircularProgressIndicator();
