@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'dart:ffi';
+//import 'dart:ffi';
 // import 'dart:html';
 
 import 'package:awashyak_v1/screens/searchMedicineCard.dart';
