@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'dart:ffi';
+//import 'dart:ffi';
 
 import 'package:awashyak_v1/utilities/seller_model.dart';
 import "package:http/http.dart" as http;
