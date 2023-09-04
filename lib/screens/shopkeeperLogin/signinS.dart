@@ -1,6 +1,6 @@
 import 'package:awashyak_v1/integration/seller.dart';
 import 'package:awashyak_v1/screens/shopkeeper/homepageShop.dart';
-
+import 'package:fancy_password_field/fancy_password_field.dart';
 
 import '../../screens/homepage.dart';
 
@@ -8,12 +8,14 @@ import '../../constants.dart';
 import '../../integration/user.dart';
 import 'package:flutter/material.dart';
 
+import '../login/validity_checks.dart';
+
 class SignInShopkeeper extends StatelessWidget {
   SignInShopkeeper({Key? key}) : super(key: key);
 
-  TextEditingController emailcontroller = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
 
-  TextEditingController passwordcontroller = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -66,12 +68,12 @@ class SignInShopkeeper extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 40.0),
                 child: TextField(
-                  controller: emailcontroller,
+                  controller: _emailController,
                   keyboardType: TextInputType.text,
                   onChanged: (value) => {},
                   decoration: const InputDecoration(
                     filled: true,
-                    fillColor: secondryColor,
+                    fillColor: secondaryColor,
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(20)),
                       borderSide: BorderSide(color: primaryColor, width: 3.0),
@@ -86,13 +88,14 @@ class SignInShopkeeper extends StatelessWidget {
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 40.0),
-                child: TextFormField(
-                  controller: passwordcontroller,
+                child: FancyPasswordField(
+                  controller: _passwordController,
                   keyboardType: TextInputType.text,
-                  onChanged: (value) => {},
+                  hasStrengthIndicator: false,
+                  hasValidationRules: false,
                   decoration: const InputDecoration(
                     filled: true,
-                    fillColor: secondryColor,
+                    fillColor: secondaryColor,
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(20)),
                       borderSide: BorderSide(color: primaryColor, width: 3.0),
@@ -108,21 +111,24 @@ class SignInShopkeeper extends StatelessWidget {
               Flexible(
                 child: InkWell(
                   onTap: () async {
-                    List ret = await signInShopkeeper(
-                        emailcontroller.text, passwordcontroller.text);
-                    // ignore: use_build_context_synchronously
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: ((context) {
-                          return HomePageShop(
-                            shopName: ret[2],
-                            shopid: ret[1],
-                            token: ret[0],
-                          );
-                        }),
-                      ),
-                    );
+                    final check = SignInCheck(_emailController);
+                    if (check.emailCheck()) {
+                      List ret = await signInShopkeeper(
+                          _emailController.text, _passwordController.text);
+                      // ignore: use_build_context_synchronously
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: ((context) {
+                            return HomePageShop(
+                              shopName: ret[2],
+                              shopid: ret[1],
+                              token: ret[0],
+                            );
+                          }),
+                        ),
+                      );
+                    }
                   },
                   child: Container(
                     decoration: BoxDecoration(

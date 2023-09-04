@@ -1,5 +1,8 @@
-import 'package:awashyak_v1/screens/shopkeeperLogin/startupPageS.dart';
+import 'dart:io';
 
+import 'package:awashyak_v1/screens/shopkeeperLogin/startupPageS.dart';
+import 'package:awashyak_v1/widgets/toast_notifications.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import '../../screens/login/signin.dart';
 import '../../screens/login/signup.dart';
 
@@ -15,6 +18,34 @@ class StartUp extends StatefulWidget {
 }
 
 class _StartUpState extends State<StartUp> {
+  Future<bool> checkConnectivity(BuildContext context) async {
+    var connection = await Connectivity().checkConnectivity();
+    if (connection == ConnectivityResult.none) {
+      showNotification("Please Connect to internet");
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Network Error'),
+            content: Text(
+                'Unable to establish a network connection. Please check your internet connection and try again.'),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop(); // Close the dialog
+                },
+                child: Text('OK'),
+              ),
+            ],
+          );
+        },
+      );
+      return false;
+    } else {
+      return true;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size;
@@ -72,15 +103,17 @@ class _StartUpState extends State<StartUp> {
               ),
               Flexible(
                 child: InkWell(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: ((context) {
-                          return  SignIn();
-                        }),
-                      ),
-                    );
+                  onTap: () async {
+                    if (await checkConnectivity(context)) {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: ((context) {
+                            return SignIn();
+                          }),
+                        ),
+                      );
+                    }
                   },
                   child: Container(
                     decoration: BoxDecoration(
@@ -106,15 +139,17 @@ class _StartUpState extends State<StartUp> {
               ),
               Flexible(
                 child: InkWell(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: ((context) {
-                          return  SignUp();
-                        }),
-                      ),
-                    );
+                  onTap: () async {
+                    if (await checkConnectivity(context)) {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: ((context) {
+                            return SignUp();
+                          }),
+                        ),
+                      );
+                    }
                   },
                   child: Container(
                     decoration: BoxDecoration(
@@ -142,14 +177,17 @@ class _StartUpState extends State<StartUp> {
               ),
               InkWell(
                 onTap: () async {
-                  Navigator.push(
+                  if (await checkConnectivity(context)) {
+                    checkConnectivity(context);
+                    Navigator.push(
                       context,
                       MaterialPageRoute(
                         builder: ((context) {
-                          return  const StartUpShopkeeper();
+                          return const StartUpShopkeeper();
                         }),
                       ),
                     );
+                  }
                 },
                 child: const Center(
                   child: Text(

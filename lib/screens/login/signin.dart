@@ -1,5 +1,5 @@
-import 'package:awashyak_v1/screens/shopkeeper/homepageShop.dart';
-
+import 'package:awashyak_v1/screens/login/validity_checks.dart';
+import 'package:fancy_password_field/fancy_password_field.dart';
 
 import '../../screens/homepage.dart';
 
@@ -10,9 +10,9 @@ import 'package:flutter/material.dart';
 class SignIn extends StatelessWidget {
   SignIn({Key? key}) : super(key: key);
 
-  TextEditingController emailcontroller = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
 
-  TextEditingController passwordcontroller = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -65,12 +65,12 @@ class SignIn extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 40.0),
                 child: TextField(
-                  controller: emailcontroller,
+                  controller: _emailController,
                   keyboardType: TextInputType.text,
                   onChanged: (value) => {},
                   decoration: const InputDecoration(
                     filled: true,
-                    fillColor: secondryColor,
+                    fillColor: secondaryColor,
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(20)),
                       borderSide: BorderSide(color: primaryColor, width: 3.0),
@@ -85,13 +85,14 @@ class SignIn extends StatelessWidget {
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 40.0),
-                child: TextFormField(
-                  controller: passwordcontroller,
+                child: FancyPasswordField(
+                  controller: _passwordController,
                   keyboardType: TextInputType.text,
-                  onChanged: (value) => {},
+                  hasStrengthIndicator: false,
+                  hasValidationRules: false,
                   decoration: const InputDecoration(
                     filled: true,
-                    fillColor: secondryColor,
+                    fillColor: secondaryColor,
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(20)),
                       borderSide: BorderSide(color: primaryColor, width: 3.0),
@@ -107,19 +108,24 @@ class SignIn extends StatelessWidget {
               Flexible(
                 child: InkWell(
                   onTap: () async {
-                    String token_ = await signInCustomer(
-                        emailcontroller.text, passwordcontroller.text);
-                    // ignore: use_build_context_synchronously
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: ((context) {
-                          return HomePageCustomer(
-                            token: token_,
-                          );
-                        }),
-                      ),
-                    );
+                    final check=SignInCheck(_emailController);
+                    if (check.emailCheck()){
+                      String token_ = await signInCustomer(
+                          _emailController.text, _passwordController.text);
+                      // ignore: use_build_context_synchronously
+                      Navigator.push(
+
+                        context,
+                        MaterialPageRoute(
+                          builder: ((context) {
+                            return HomePageCustomer(
+                              token: token_,
+                            );
+                          }
+                          ),
+                        ),
+                      );
+                    }
                   },
                   child: Container(
                     decoration: BoxDecoration(
