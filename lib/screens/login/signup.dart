@@ -109,6 +109,7 @@ class SignUp extends StatelessWidget {
                 SizedBox(
                   height: height * 0.03,
                 ),
+
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 30.0),
                   child: TextFormField(
@@ -172,13 +173,13 @@ class SignUp extends StatelessWidget {
                   ),
                 ),
                 SizedBox(
-                  height: height * 0.1,
+                  height: height * 0.05,
                 ),
                 InkWell(
                   onTap: () async {
                     SignUpCheck check = SignUpCheck(passwordController,
-                        cPasswordController, mobileController);
-                    if (check.mobileCheck() && check.passwordIdentityCheck()) {
+                        cPasswordController, mobileController,emailController);
+                    if (check.emptyCheck()&&check.mobileCheck() && check.passwordIdentityCheck() && check.emailCheck()) {
                       String token_ = await signUpCustomer(
                           nameController.text,
                           int.parse(mobileController.text),
@@ -216,9 +217,9 @@ class SignUp extends StatelessWidget {
                     )),
                   ),
                 ),
-                // SizedBox(
-                //   height: height * 0.05,
-                // ),
+                SizedBox(
+                  height: height * 0.05,
+                ),
                 // InkWell(
                 //   onTap: () async {
                 //     Navigator.pop(context);

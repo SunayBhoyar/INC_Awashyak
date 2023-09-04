@@ -50,6 +50,7 @@ dependencies:
   lottie: ^2.3.2
   fluttertoast: ^8.2.2
   fancy_password_field: ^2.0.0
+  connectivity_plus: ^4.0.2
 
 dev_dependencies:
 
