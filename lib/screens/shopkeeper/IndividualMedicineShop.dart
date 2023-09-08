@@ -1,8 +1,11 @@
 import 'package:awashyak_v1/integration/seller.dart';
+import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 import '../../constants.dart';
 import '../../screens/medical_stores_card.dart';
 import '../../utilities/datamodel.dart';
+import '../../utilities/errorhandling.dart';
 import 'package:flutter/material.dart';
 
 class IndividualMedicineShop extends StatefulWidget {
@@ -77,6 +80,8 @@ class _IndividualMedicineShopState extends State<IndividualMedicineShop> {
     bool task = true;
     double relHeight = MediaQuery.of(context).size.height;
     double relWidth = MediaQuery.of(context).size.width;
+   
+    
 
     return Scaffold(
       body: Container(
@@ -138,7 +143,9 @@ class _IndividualMedicineShopState extends State<IndividualMedicineShop> {
                       top: relHeight / 35,
                       bottom: relHeight / 35),
                   child: Text(
-                    "Amount of medicine present- ",
+                    textAlign: TextAlign.center,
+                    "Available quantity of medicine ",
+                    
                     style: TextStyle(
                         color: lightColor,
                         fontSize: relWidth / 20,
@@ -177,21 +184,40 @@ class _IndividualMedicineShopState extends State<IndividualMedicineShop> {
                           cursorColor: Colors.black87,
                           controller: amountController,
                           textAlign: TextAlign.center,
-                          keyboardType: TextInputType.text,
-                          onChanged: (value) => {},
-                          style: TextStyle(
-                              fontSize: relHeight / 30,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white),
+                          inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
+                          
+                          
+                         
+                          keyboardType: TextInputType.number,
+                          onChanged: (value) => {
+                           
+
+                                if (amountController.text == ""){
+                                  amountController.text="0"
+                                }
+                                else{
+                                  print( amountController.text)
+                                }
+                              },
                           decoration: InputDecoration(
                             filled: true,
                             border: InputBorder.none,
+                            
+                             //errorText: "Please enter valid cost",
                             // hintText: widget.quantity.toString(),
                             hintStyle: TextStyle(
                                 fontSize: relHeight / 30,
                                 fontWeight: FontWeight.bold,
                                 color: Colors.white),
                           ),
+                        
+                        validator:(value){
+                          if(value!.isEmpty|| !RegExp(r'^[0-9]{1,9999999}').hasMatch(value!)){
+                            return "please enter a valid amount";
+
+                          }
+                        }
+
                         ),
                       ),
                     ),
@@ -241,7 +267,10 @@ class _IndividualMedicineShopState extends State<IndividualMedicineShop> {
                       top: relHeight / 35,
                       bottom: relHeight / 35),
                   child: Text(
-                    "Cost of one medicine packet - ",
+                    //textAlign: TextAlign.center,
+                    "Cost per quantity",
+                    
+                    textAlign: TextAlign.center,
                     style: TextStyle(
                         color: lightColor,
                         fontSize: relWidth / 20,
@@ -249,20 +278,20 @@ class _IndividualMedicineShopState extends State<IndividualMedicineShop> {
                   ),
                 ),
                 Stack(children: [
-                  Padding(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: relWidth / 10,
-                    ),
-                    child: Container(
-                      height: relHeight / 15,
-                      decoration: const BoxDecoration(
-                        color: secondryColor,
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(30),
-                        ),
-                      ),
-                    ),
-                  ),
+                  // Padding(
+                  //   padding: EdgeInsets.symmetric(
+                  //     horizontal: relWidth / 10,
+                  //   ),
+                  //   child: Container(
+                  //     height: relHeight / 15,
+                  //     decoration: const BoxDecoration(
+                  //       color: secondryColor,
+                  //       borderRadius: BorderRadius.all(
+                  //         Radius.circular(30),
+                  //       ),
+                  //     ),
+                  //   ),
+                  // ),
                   Padding(
                     padding: EdgeInsets.symmetric(
                       horizontal: relWidth / 3.5,
@@ -280,7 +309,11 @@ class _IndividualMedicineShopState extends State<IndividualMedicineShop> {
                           cursorColor: Colors.black87,
                           controller: costController,
                           textAlign: TextAlign.center,
-                          keyboardType: TextInputType.text,
+                        
+                          inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
+                          keyboardType: TextInputType.number,
+                          
+                          
                           onChanged: (value) => {},
                           style: TextStyle(
                               fontSize: relHeight / 30,
@@ -288,6 +321,7 @@ class _IndividualMedicineShopState extends State<IndividualMedicineShop> {
                               color: Colors.white),
                           decoration: InputDecoration(
                             border: InputBorder.none,
+                            //errorText: "Please enter valid cost",
                             filled: true,
                             // fillColor: Colors.white,
                             // hintText: "30",
@@ -295,49 +329,52 @@ class _IndividualMedicineShopState extends State<IndividualMedicineShop> {
                                 fontSize: relHeight / 30,
                                 fontWeight: FontWeight.bold,
                                 color: Colors.white),
+                                enabled: false
                           ),
+                         
+                          
                         ),
                       ),
                     ),
                   ),
-                  Padding(
-                    padding: EdgeInsets.only(
-                      left: relWidth / 1.35,
-                      top: relHeight / 90,
-                    ),
-                    child: InkWell(
-                      onTap: () {
-                        setState(
-                          () {
-                            incrementCost();
-                          },
-                        );
-                      },
-                      child: const Icon(
-                        Icons.add,
-                        size: 40,
-                        color: primaryColor,
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(
-                      left: relWidth / 6.5,
-                      top: relHeight / 90,
-                    ),
-                    child: InkWell(
-                      onTap: () {
-                        setState(() {
-                          decrementCost();
-                        });
-                      },
-                      child: const Icon(
-                        Icons.remove,
-                        size: 40,
-                        color: primaryColor,
-                      ),
-                    ),
-                  ),
+                  // Padding(
+                  //   padding: EdgeInsets.only(
+                  //     left: relWidth / 1.35,
+                  //     top: relHeight / 90,
+                  //   ),
+                  //   child: InkWell(
+                  //     onTap: () {
+                  //       setState(
+                  //         () {
+                  //           incrementCost();
+                  //         },
+                  //       );
+                  //     },
+                  //     child: const Icon(
+                  //       Icons.add,
+                  //       size: 40,
+                  //       color: primaryColor,
+                  //     ),
+                  //   ),
+                  // ),
+                  // Padding(
+                  //   padding: EdgeInsets.only(
+                  //     left: relWidth / 6.5,
+                  //     top: relHeight / 90,
+                  //   ),
+                  //   child: InkWell(
+                  //     onTap: () {
+                  //       setState(() {
+                  //         decrementCost();
+                  //       });
+                  //     },
+                  //     child: const Icon(
+                  //       Icons.remove,
+                  //       size: 40,
+                  //       color: primaryColor,
+                  //     ),
+                  //   ),
+                  // ),
                 ]),
                 const SizedBox(
                   height: 40,

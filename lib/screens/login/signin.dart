@@ -1,11 +1,13 @@
 import 'package:awashyak_v1/screens/shopkeeper/homepageShop.dart';
-
+import 'Roundbutton.dart';
+import 'logtin_with_phone_number.dart';
 
 import '../../screens/homepage.dart';
 
 import '../../constants.dart';
 import '../../integration/user.dart';
 import 'package:flutter/material.dart';
+import '../../screens/login/otp.dart';
 
 class SignIn extends StatelessWidget {
   SignIn({Key? key}) : super(key: key);
@@ -140,6 +142,51 @@ class SignIn extends StatelessWidget {
                   ),
                 ),
               ),
+              //SizedBox(height: height*0.15,),
+              // InkWell(
+              //   onTap: () async {
+              //     //Navigator.push(context, MaterialPageRoute(builder:context ));
+              //     Navigator.push(
+              //         context,
+              //         MaterialPageRoute(
+              //           builder: ((context) {
+              //             //return ottp();
+                            
+                      
+              //           }),
+              //         ),
+              //       );
+              //   },
+              //   child: const Center(
+              //     child: Text(
+              //       "Login with OTP",
+              //       style: TextStyle(
+              //         decoration: TextDecoration.underline,
+              //         color: Color.fromARGB(255, 255, 255, 255),
+              //       ),
+              //     ),
+    
+              //   ),
+              // ),
+              // InkWell(
+              //   onTap: (){
+              //     Navigator.push(context, MaterialPageRoute(builder: (context )=>LoginWithPhoneNumber() ));
+
+              //   },
+              //   child: Container(
+              //     height: 50,
+              //     decoration: BoxDecoration(
+              //       borderRadius: BorderRadius.circular(50),
+              //       border: Border.all(
+              //         color: Colors.black
+              //       )
+              //     ),
+              //     child: Center(
+                    
+              //       child: Text("Login with phone no"),
+              //     ),
+              //   ),
+              // ),
               SizedBox(
                 height: height * 0.3,
               ),
@@ -155,8 +202,14 @@ class SignIn extends StatelessWidget {
                       color: Color.fromARGB(255, 255, 255, 255),
                     ),
                   ),
+    
                 ),
               ),
+              // SizedBox(
+              //   height: height*0.2,
+              // ),
+              
+              
             ],
           ),
         ),

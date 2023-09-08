@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "543058721297",
+    "project_id": "awashyakotp",
+    "storage_bucket": "awashyakotp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:543058721297:android:a3608f0f7dbbd56f134fb0",
+        "android_client_info": {
+          "package_name": "com.example.awashyak_v1"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "543058721297-qu7hhqodb0p0vgg3qmvnkeclp85jo5es.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCAktOY7KktJ_CBnjvHmk0e-FWOjVwDbKI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "543058721297-qu7hhqodb0p0vgg3qmvnkeclp85jo5es.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
