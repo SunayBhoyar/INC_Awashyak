@@ -1,4 +1,4 @@
-import '../screens/homePage.dart';
+/*import '../screens/homePage.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 
@@ -187,4 +187,4 @@ class _PageControllerState extends State<PageController> {
       ),
     );
   }
-}
+}*/
